@@ -1,0 +1,201 @@
+.logo-img {
+  height: 78px;
+  max-height: 80px;
+  width: auto;
+}
+
+.custom-navbar {
+  background-color: #1c5daa !important;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.custom-navbar .nav-link,
+.custom-navbar .navbar-brand {
+  color: white !important;
+  font-weight: 500;
+}
+
+.custom-navbar .nav-link:hover,
+.custom-navbar .dropdown-item:hover {
+  color: rgba(145, 184, 229, 0.8) !important; /* #91B8E5 80% opacity */
+}
+
+.dropdown-menu {
+  background-color: #000000;
+  border: none;
+}
+
+.dropdown-item {
+  color: white;
+}
+
+/* Make sure dropdown is above carousel */
+.dropdown-menu {
+  z-index: 2000;
+}
+
+.custom-masuk-btn {
+  background-color: #1c5daa;
+  color: white;
+  border: 1.5px solid white;
+  transition: background-color 0.3s ease;
+}
+
+.custom-masuk-btn:hover {
+  background-color: #ffffff;
+  color: #1c5daa;
+}
+
+.beranda-section {
+  padding: 0; /* hilangkan padding bawaan */
+}
+
+.hero-image {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* penuh 1 layar, bisa ubah misal 600px */
+  overflow: hidden;
+}
+
+.hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* biar proporsional */
+  display: block;
+}
+
+#heroCarousel .carousel-item img {
+  height: 65vh; /* penuh layar */
+  object-fit: cover;
+}
+
+.paragraf-kiri {
+  text-align: left;
+}
+
+.container {
+  max-width: 1400px; /* default bootstrap biasanya 1140px di layar besar */
+}
+
+.container-wide {
+  max-width: 90%; /* persentase layar */
+  margin: 0 auto;
+}
+
+.card {
+  background-color: white;
+  padding: 10px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  height: 100%; /* buat card sama tinggi */
+  font-family: Arial, sans-serif;
+  /* hapus width dan display inline-block */
+  margin-bottom: 20px; /* jarak antar row */
+}
+
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+  border-radius: 6px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.card-title {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.card-text {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.card-button {
+  display: inline-block;
+  background-color: #2563eb; /* biru */
+  color: white;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  border-radius: 4px;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.3s;
+}
+
+.card-button:hover {
+  background-color: #1e40af;
+}
+
+.arrow {
+  margin-left: 6px;
+  font-weight: bold;
+}
+
+.btn-container {
+  text-align: right;
+}
+
+.logo-marquee {
+  overflow: hidden;
+  background-color: #e6f0fa; /* sesuai latar belakang */
+  padding: 10px 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.logo-track {
+  display: flex;
+  width: calc(200%); /* lebar dua kali untuk animasi looping */
+  animation: scroll-left 20s linear infinite;
+}
+
+.logo-track a {
+  flex: 0 0 auto;
+  margin: 0 25px;
+}
+
+.logo-track img {
+  height: 50px; /* sesuaikan ukuran logo */
+  object-fit: contain;
+  vertical-align: middle;
+}
+
+/* Animasi scroll ke kiri */
+.logo-marquee {
+  overflow: hidden;
+  background-color: #e6f0fa;
+  padding: 10px 0;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.logo-track {
+  display: flex;
+  width: calc(200%);
+  animation: scroll-left 20s linear infinite;
+}
+
+.logo-track a {
+  flex: 0 0 auto;
+  margin: 0 25px;
+}
+
+.logo-track img {
+  height: 50px;
+  object-fit: contain;
+  vertical-align: middle;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
