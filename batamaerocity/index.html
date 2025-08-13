@@ -1,4 +1,3 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -7,13 +6,15 @@
     <title>Batam Aerocity</title>
 
     <!-- Bootstrap CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- Font Awesome untuk Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
   </head>
   <body style="background-color: #E6F0FA;">
     <!-- Navbar -->
@@ -22,70 +23,50 @@
         <div class="d-flex align-items-center justify-content-between w-100">
           <!-- Logo -->
           <a class="navbar-brand ms-2 me-4" href="#">
-            <img src="images/logo_BA.png" alt="Logo" class="logo-img" />
+            <img src="images/logo_BA.jpeg" alt="Logo" class="logo-img" />
           </a>
 
           <!-- Toggler -->
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-          >
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" >
             <span class="navbar-toggler-icon"></span>
           </button>
 
           <!-- Menu -->
           <div
-            class="collapse navbar-collapse justify-content-center"
-            id="navbarNav"
-          >
+            class="collapse navbar-collapse justify-content-center" id="navbarNav" >
             <ul class="navbar-nav gap-3">
               <li class="nav-item">
                 <a class="nav-link active" href="#">Beranda</a>
               </li>
               <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  data-bs-toggle="dropdown"
-                  >Profil DPKB</a
-                >
+                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Profil DPKB</a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Latar Belakang</a></li>
-                  <li>
-                    <a class="dropdown-item" href="#">Tugas dan Fungsi</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="#">Struktur Organisasi</a>
-                  </li>
-                </ul>
-              </li>
-              <li class="nav-item"><a class="nav-link" href="#">Layanan</a></li>
-              <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  data-bs-toggle="dropdown"
-                  >Data</a
-                >
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">RIB</a></li>
-                  <li><a class="dropdown-item" href="#">Statistik</a></li>
+                  <li><a class="dropdown-item" href="profile/latar_belakang.html">Latar Belakang</a></li>
+                  <li><a class="dropdown-item" href="profile/tugas_fungsi.html">Tugas dan Fungsi</a></li>
+                  <li><a class="dropdown-item" href="profile/struktur_organisasi.html">Struktur Organisasi</a></li>
                 </ul>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Regulasi</a>
+                <a class="nav-link" href="layanan.html">Layanan</a>
               </li>
-              <li class="nav-item"><a class="nav-link" href="#">Kontak</a></li>
+              <li class="nav-item">
+                <a class="nav-link" href="regulasi.html">Regulasi</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="berita.html">Berita</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="survei.html">Survei</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="kontak.html">Kontak</a>
+              </li>
             </ul>
           </div>
 
           <!-- Button Masuk -->
           <div class="d-none d-lg-block me-3">
-            <button class="btn custom-masuk-btn px-4" type="button">
-              Masuk
-            </button>
+            <button class="btn custom-masuk-btn px-4" type="button">Masuk</button>
           </div>
         </div>
       </div>
@@ -93,51 +74,35 @@
 
     <!-- Carousel -->
     <section class="beranda-section">
-      <div
-        id="heroCarousel"
-        class="carousel slide carousel-fade"
-        data-bs-ride="carousel"
-        data-bs-interval="2500"
-      >
+      <div id="heroCarousel" class="carousel slide carousel-fade" 
+          data-bs-ride="carousel" 
+          data-bs-interval="2500" 
+          data-bs-wrap="true" 
+          data-bs-pause="false">
+          
         <div class="carousel-indicators">
-          <button
-            type="button"
-            data-bs-target="#heroCarousel"
-            data-bs-slide-to="0"
-            class="active"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#heroCarousel"
-            data-bs-slide-to="1"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#heroCarousel"
-            data-bs-slide-to="2"
-          ></button>
-          <button
-            type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3" >
-          </button>
+          <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+          <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+          <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+          <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3"></button>
+          <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="4"></button>
         </div>
+
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img
-              src="images/masjid_tanjak.jpeg" class="d-block w-100" alt="Masjid Tanjak" />
+            <img src="images/masjid_tanjak.jpeg" class="d-block w-100" alt="Masjid Tanjak">
           </div>
           <div class="carousel-item">
-            <img src="images/vvip.jpeg" class="d-block w-100" alt="VVIP" />
+            <img src="images/vvip.jpeg" class="d-block w-100" alt="VVIP">
           </div>
           <div class="carousel-item">
-            <img src="images/cargo.jpeg" class="d-block w-100" alt="Cargo" />
+            <img src="images/cargo.jpeg" class="d-block w-100" alt="Cargo">
           </div>
           <div class="carousel-item">
-            <img
-              src="images/terminal.jpeg" class="d-block w-100" alt="Terminal" />
+            <img src="images/terminal.jpeg" class="d-block w-100" alt="Terminal">
           </div>
-          <div class="carousel-item active">
-            <img
-              src="images/DPKB.jpeg" class="d-block w-100" alt="DPKB" />
+          <div class="carousel-item">
+            <img src="images/DPKB.jpeg" class="d-block w-100" alt="DPKB">
           </div>
         </div>
       </div>
@@ -167,32 +132,24 @@
           <h3 class="mb-4 fw-bold">Fasilitas Batam Aerocity</h3>
           <div class="col-md-4 mb-3">
             <div class="card h-100">
-              <img
-                src="images/terminal.jpeg"
-                class="card-img-top"
-                alt="Fasilitas 1"
-              />
+              <img src="images/terminal.jpeg" class="card-img-top" alt="Fasilitas 1"/>
               <div class="card-body">
-                <h5 class="card-title">Bandara Hang Nadim</h5>
+                <h3 class="card-title">Bandara Hang Nadim</h3>
                 <p class="card-text">Info singkat</p>
                 <div class="btn-container">
-                  <a href="#" class="card-button">Link BIB <span class="arrow">→</span></a>
+                  <a href="https://bthairport.com/" class="card-button">Selengkapnya</a>
                 </div>
               </div>
             </div>
           </div>
           <div class="col-md-4 mb-3">
             <div class="card h-100">
-              <img
-                src="images/MRO.jpg"
-                class="card-img-top"
-                alt="Fasilitas 2"
-              />
+              <img src="images/MRO.jpg" class="card-img-top" alt="Fasilitas 2"/>
               <div class="card-body">
-                <h5 class="card-title">MRO</h5>
-                <p class="card-text">Info singkat</p>
+               <h3 class="card-title">MRO</h3>
+               <p class="card-text">Info singkat</p>
                <div class="btn-container">
-                <a href="#" class="card-button">Link BIB <span class="arrow">→</span></a>
+                <a href="https://kek.go.id/id/investment/distribution/kek-batam-aero-technic" class="card-button">Selengkapnya</a>
               </div>
               </div>
             </div>
@@ -205,10 +162,10 @@
                 alt="Fasilitas 3"
               />
               <div class="card-body">
-                <h5 class="card-title">Kawasan Industri Bandara</h5>
+                <h3 class="card-title">Kawasan Industri Bandara</h3>
                 <p class="card-text">Info singkat</p>
                 <div class="btn-container">
-                  <a href="#" class="card-button">Link BIB <span class="arrow">→</span></a>
+                  <a href="#" class="card-button">Selengkapnya</a>
                 </div>
               </div>
             </div>
@@ -224,10 +181,10 @@
                 alt="Fasilitas 4"
               />
               <div class="card-body">
-                <h5 class="card-title">Cargo</h5>
+                <h3 class="card-title">Cargo</h3>
                 <p class="card-text">Info singkat</p>
               <div class="btn-container">
-                <a href="#" class="card-button">Link BIB <span class="arrow">→</span></a>
+                <a href="#" class="card-button">Selengkapnya</a>
               </div>
               </div>
             </div>
@@ -240,10 +197,10 @@
                 alt="Fasilitas 5"
               />
               <div class="card-body">
-                <h5 class="card-title">Komersial Hub</h5>
+                <h3 class="card-title">Komersial Hub</h3>
                 <p class="card-text">Info singkat</p>
                <div class="btn-container">
-                <a href="#" class="card-button">Link BIB <span class="arrow">→</span></a>
+                <a href="#" class="card-button">Selengkapnya</a>
               </div>
               </div>
             </div>
@@ -256,10 +213,10 @@
                 alt="Fasilitas 6"
               />
               <div class="card-body">
-                <h5 class="card-title">Sarana Pendukung Bandara</h5>
+                <h3 class="card-title">Sarana Pendukung Bandara</h3>
                 <p class="card-text">Info singkat</p>
               <div class="btn-container">
-                <a href="#" class="card-button">Link BIB <span class="arrow">→</span></a>
+                <a href="#" class="card-button">Selengkapnya</a>
               </div>
               </div>
             </div>
@@ -268,77 +225,151 @@
       </div>
 
       <!-- Section Peta Kawasan -->
-      <section id="peta-kawasan" style="padding: 50px 0;">
+      <section id="peta-kawasan" style="padding-bottom: 180px;">
         <div class="container-wide mt-5">
           <div class="container-wide mt-5">
           <h2 class="text-start fw-bold" style="color:#000000;">Peta Kawasan Bandara</h2>
-          <div id="map" style="height: 500px; width: 100%; border-radius: 10px;"></div>
+          <div id="map" style="height: 600px; width: 100%;"></div>
           </div>
         </div>
       </section>
 
       <!-- Container marquee -->
       <div class="logo-marquee">
-        <div class="logo-track">
-          <a href="https://www.batam.go.id" target="_blank" rel="noopener noreferrer">
-            <img src="images/logo_kemenhub.png" alt="Kemenhub" />
-          </a>
-          <a href="https://www.hangnadim.co.id" target="_blank" rel="noopener noreferrer">
-            <img src="images/logo_BP.png" alt="BP Batam" />
-          </a>
-          <a href="https://www.pertamina.com" target="_blank" rel="noopener noreferrer">
-            <img src="images/logo_BIB.png" alt="BIB" />
-          </a>
-          <a href="https://www.airport.go.id" target="_blank" rel="noopener noreferrer">
-            <img src="images/logo_airnav.png" alt="Airnav" />
-          </a>
-          <a href="https://www.airline.com" target="_blank" rel="noopener noreferrer">
-            <img src="images/logo_bmkg.png" alt="BMKG" />
-          </a>
-          <a href="https://www.bmkg.go.id" target="_blank" rel="noopener noreferrer">
-            <img src="images/logo_pertamina.png" alt="Pertamina" />
-          </a>
+      <div class="logo-track">
+        <a href="#"><img src="images/logo_kemenhub.png" alt="Kemenhub"></a>
+        <a href="#"><img src="images/logo_BP.png" alt="BP Batam"></a>
+        <a href="#"><img src="images/logo_BIB.png" alt="BIB"></a>
+        <a href="#"><img src="images/logo_airnav.png" alt="Airnav"></a>
+        <a href="#"><img src="images/logo_bmkg.png" alt="BMKG"></a>
+        <a href="#"><img src="images/logo_pertamina.png" alt="Pertamina"></a>
+
+        <!-- Duplikat isi -->
+        <a href="#"><img src="images/logo_kemenhub.png" alt="Kemenhub"></a>
+        <a href="#"><img src="images/logo_BP.png" alt="BP Batam"></a>
+        <a href="#"><img src="images/logo_BIB.png" alt="BIB"></a>
+        <a href="#"><img src="images/logo_airnav.png" alt="Airnav"></a>
+        <a href="#"><img src="images/logo_bmkg.png" alt="BMKG"></a>
+        <a href="#"><img src="images/logo_pertamina.png" alt="Pertamina"></a>
+
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-white pt-5 pb-3 position-relative">
+      <div class="container">
+       <div class="row align-items-stretch">
+        <!-- Kiri -->
+        <div class="col-md-6 mb-4">
+          <img src="images/logo_BA.jpeg" alt="Batam Aerocity" style="width: 200px !important; max-width: 100%;" class="mb-3">
+          <p>
+            Aerocity merupakan sebuah pembangunan perekonomian yang memusatkan aktivitasnya di area sekitar bander udara. Dalam konsep yang ditawarkan ini, investor dapat menggunakan transportasi udara dalam melakukan pengiriman barang.
+          </p>
+          <div>
+            <a href="#" class="text-white me-3"><i class="bi bi-facebook fs-4"></i></a>
+            <a href="#" class="text-white"><i class="bi bi-instagram fs-4"></i></a>
+          </div>
+        </div>
+
+        <!-- Kanan -->
+        <div class="col-md-6 d-flex flex-column justify-content-center pad-kontak">
+          <h5>Kontak</h5>
+          <p><i class="bi bi-telephone me-2"></i> +123 456 7890</p>
+          <p><i class="bi bi-envelope me-2"></i> Batamaerocity@bpbatam.go.id</p>
+          <p><i class="bi bi-geo-alt me-2"></i> Gedung direktorat pengelolaan kawasan bandara</p>
         </div>
       </div>
 
-      <!-- Footer -->
-      <footer class="bg-dark text-white py-4">
-        <div class="container text-center">
-          <p class="mb-0">&copy; 2025 Batam Aerocity. All rights reserved.</p>
-        </div>
+        <!-- Garis -->
+        <hr class="border-light">
+
+        <!-- Copyright -->
+        <p class="mb-0">Copyright © 2025 Batam Aerocity, All Rights Reserved.</p>
+      </div>
+
+        <!-- Tombol WhatsApp -->
+        <a href="https://wa.me/6281234567890" target="_blank" 
+          class="position-absolute" 
+          style="top: 20px; right: 20px;">
+        </a>
       </footer>
 
-        <!-- Leaflet CSS -->
-        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+      <!-- Floating WhatsApp Button -->
+      <div id="whatsapp-widget">
+        <div class="chat-bubble"> Chat dengan kami</div>
+        <div class="whatsapp-btn" onclick="toggleChatPopup()">
+          <i class="fab fa-whatsapp"></i>
+        </div>
 
-        <!-- Leaflet JS -->
-        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-        <script>
-          // Inisialisasi peta
-          var map = L.map('map').setView([1.1211, 104.1198], 15);
+        <!-- Popup Chat Tiruan -->
+        <div class="chat-popup" id="chatPopup">
+          <div class="chat-header">
+            <i class="fab fa-whatsapp"></i> Customer Service
+            <span onclick="toggleChatPopup()" style="cursor:pointer;">&times;</span>
+          </div>
+          <div class="chat-body">
+            <p>Halo 👋<br>Butuh bantuan? Silakan chat kami via WhatsApp.</p>
+          </div>
+          <div class="chat-footer">
+            <a href="https://wa.me/6281234567890?text=Halo,%20saya%20mau%20bertanya" target="_blank">
+              <i class="fab fa-whatsapp"></i> Mulai Chat
+            </a>
+          </div>
+        </div>
+      </div>
 
-          // Tambahkan layer peta
-          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-          }).addTo(map);
+      <script>
+        function toggleChatPopup() {
+          const popup = document.getElementById("chatPopup");
+          popup.style.display = (popup.style.display === "block") ? "none" : "block";
+        }
+      </script>
 
-          // Marker 1 - Terminal Bandara
-          L.marker([1.1211, 104.1198])
-            .addTo(map)
-            .bindPopup('<b>Terminal Bandara</b><br><a href="https://bpbatam.go.id" target="_blank">Lihat Detail</a>');
+      <script>
+        var myCarousel = document.querySelector('#heroCarousel');
+        var carousel = new bootstrap.Carousel(myCarousel, {
+          interval: 3000, // ganti slide tiap 3 detik
+          wrap: true     // looping terus
+        });
+      </script>
 
-          // Marker 2 - Gudang Logistik
-          L.marker([1.1225, 104.1210])
-            .addTo(map)
-            .bindPopup('<b>Gudang Logistik</b><br><a href="https://google.com" target="_blank">Lihat Detail</a>');
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-          // Marker 3 - Kawasan Perkantoran
-          L.marker([1.1195, 104.1180])
-            .addTo(map)
-            .bindPopup('<b>Kawasan Perkantoran</b><br><a href="https://example.com" target="_blank">Lihat Detail</a>');
-        </script>
+      <!-- Leaflet CSS -->
+      <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+      <!-- Leaflet JS -->
+      <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+      <script>
+        // Inisialisasi peta
+        var map = L.map('map').setView([1.1211, 104.1198], 15);
+
+        // Tambahkan layer peta
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 19,
+        }).addTo(map);
+
+        // Marker 1 - Terminal Bandara
+        L.marker([1.1211, 104.1198])
+          .addTo(map)
+          .bindPopup('<b>Terminal Bandara</b><br><a href="https://bpbatam.go.id" target="_blank">Lihat Detail</a>');
+
+        // Marker 2 - Gudang Logistik
+        L.marker([1.1225, 104.1210])
+          .addTo(map)
+          .bindPopup('<b>Gudang Logistik</b><br><a href="https://google.com" target="_blank">Lihat Detail</a>');
+
+        // Marker 3 - Kawasan Perkantoran
+        L.marker([1.1195, 104.1180])
+          .addTo(map)
+          .bindPopup('<b>Kawasan Perkantoran</b><br><a href="https://example.com" target="_blank">Lihat Detail</a>');
+      </script>
+
+      <!-- Bootstrap Icons -->
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+      <!-- Bootstrap JS -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
