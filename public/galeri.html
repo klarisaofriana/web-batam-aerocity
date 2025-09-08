@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Berita - Batam AeroCity</title>
+
+    <link rel="icon" href="images/logo_BA.jpeg" type="image/jpeg" />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/style.css" />
+
+    <!-- Font Awesome untuk Icon -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+      /* Styling untuk card berita */
+      .card {
+        transition: transform 0.3s;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Styling untuk pagination */
+      .pagination .page-item.active .page-link {
+        background-color: #1c5daa;
+        border-color: #1c5daa;
+      }
+
+      .pagination .page-link {
+        color: #1c5daa;
+      }
+
+      .pagination .page-link:hover {
+        color: #0d4a8a;
+      }
+
+      /* Styling untuk tombol */
+      .btn-primary {
+        background-color: #1c5daa;
+        border-color: #1c5daa;
+      }
+
+      .btn-primary:hover {
+        background-color: #0d4a8a;
+        border-color: #0d4a8a;
+      }
+
+      .masuk-btn {
+        background-color: transparent;
+        border: 1px solid white;
+        color: white;
+      }
+
+      .masuk-btn:hover {
+        background-color: white;
+        color: #1c5daa;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-content">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+        <div class="container">
+          <!-- Logo -->
+          <a class="navbar-brand" href="#">
+            <img
+              src="images/logo_BA.jpeg"
+              alt="Logo Batam Aerocity"
+              class="logo-img"
+            />
+          </a>
+
+          <!-- Toggler -->
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <!-- Menu -->
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">Beranda</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  data-bs-toggle="dropdown"
+                  >Tentang Kami</a
+                >
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" href="profile/latar_belakang.html"
+                      >Latar Belakang</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="profile/tugas_fungsi.html"
+                      >Tugas dan Fungsi</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="profile/struktur_organisasi.html"
+                      >Struktur Organisasi</a
+                    >
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="layananDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Layanan
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="layananDropdown">
+                  <li>
+                    <a class="dropdown-item" href="layanan/layanan_kami.php"
+                      >Layanan Kami</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="layanan/kemitraan.html"
+                      >Kemitraan</a
+                    >
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="galeri.html">Galeri</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="kontak.html">Kontak</a>
+              </li>
+            </ul>
+
+            <!-- Tombol Masuk untuk Desktop -->
+            <div class="d-flex align-items-center desktop-login-btn">
+              <button
+                class="btn masuk-btn"
+                onclick="window.open('login.html', '_blank')"
+              >
+                <i class="fa-solid fa-user"></i> Masuk
+              </button>
+            </div>
+
+            <!-- Tombol Masuk untuk Mobile -->
+            <div class="mobile-login-btn">
+              <button
+                class="btn masuk-btn"
+                onclick="window.open('login.html', '_blank')"
+              >
+                <i class="fa-solid fa-user"></i> Masuk
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const navLinks = document.querySelectorAll(
+            ".custom-navbar .nav-link"
+          );
+          const currentPath =
+            window.location.pathname.split("/").pop() || "index.html";
+          navLinks.forEach((link) => {
+            if (link.getAttribute("href") === currentPath)
+              link.classList.add("active");
+          });
+          navLinks.forEach((link) =>
+            link.addEventListener("click", function () {
+              navLinks.forEach((l) => l.classList.remove("active"));
+              this.classList.add("active");
+            })
+          );
+        });
+      </script>
+
+      <!-- Container Berita & Search -->
+      <div class="container py-5">
+        <div
+          class="d-flex flex-wrap justify-content-between align-items-end mb-4"
+        >
+          <h2 class="fw-bold mb-2" style="color: #1c5daa">Berita</h2>
+          <div class="input-group" style="max-width: 360px">
+            <input
+              type="text"
+              id="searchInput"
+              class="form-control"
+              placeholder="Cari berita..."
+            />
+            <button id="btnSearch" class="btn btn-primary">Cari</button>
+          </div>
+        </div>
+
+        <div class="row g-4" id="berita-container">
+          <!-- Placeholder content if API fails -->
+          <div class="col-12 text-center">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Memuat berita...</span>
+            </div>
+            <p class="mt-2">Memuat berita...</p>
+          </div>
+        </div>
+        <nav class="mt-4">
+          <ul class="pagination justify-content-center" id="pagination"></ul>
+        </nav>
+      </div>
+    </div>
+    <!-- End of main-content -->
+
+    <!-- Footer -->
+    <footer class="text-white pt-4 pb-2">
+      <div class="container">
+        <div class="row align-items-start">
+          <!-- Kiri -->
+          <div class="col-lg-6 col-md-12 mb-4 footer-logo">
+            <div class="text-md-start footer-content">
+              <img
+                src="images/aerocity_logo.png"
+                alt="Batam Aerocity"
+                style="width: 180px; max-width: 100%"
+                class="mb-2"
+              />
+              <p style="font-size: 0.9rem">
+                Aerocity merupakan sebuah pembangunan perekonomian yang
+                memusatkan aktivitasnya di area sekitar bandar udara. Dalam
+                konsep yang ditawarkan ini, investor dapat menggunakan
+                transportasi udara dalam melakukan pengiriman barang.
+              </p>
+              <div class="social-icons mt-2">
+                <a
+                  href="https://www.facebook.com/share/1B16ggstpr/?mibextid=wwXIfr"
+                  class="text-white me-3"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <i class="bi bi-facebook fs-4"></i>
+                </a>
+                <a
+                  href="https://www.instagram.com/bpbatam?igsh=MWJwMzlkNzBhb3AzOQ=="
+                  class="text-white"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <i class="bi bi-instagram fs-4"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Kanan -->
+          <div
+            class="col-lg-6 col-md-12 mb-4 footer-contact d-flex flex-column justify-content-start align-items-center"
+          >
+            <div class="pad-kontak footer-content">
+              <h5 style="font-size: 1.1rem">Kontak</h5>
+              <p style="margin-bottom: 0.8rem">
+                <i class="bi bi-telephone me-2"></i> +123 456 7890
+              </p>
+              <p style="margin-bottom: 0.8rem">
+                <i class="bi bi-envelope me-2"></i> Batamaerocity@bpbatam.go.id
+              </p>
+              <p style="margin-bottom: 0">
+                <i class="bi bi-geo-alt me-2"></i> Gedung direktorat pengelolaan
+                kawasan bandara
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Garis -->
+        <hr class="border-light my-2" />
+
+        <!-- Copyright -->
+        <p class="footer-copyright mb-0 text-center text-md-start">
+          Copyright © 2025 Batam Aerocity, All Rights Reserved.
+        </p>
+      </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <div id="whatsapp-widget">
+      <div class="chat-bubble">Chat dengan kami</div>
+      <div class="whatsapp-btn" onclick="toggleChatPopup()">
+        <i class="fab fa-whatsapp"></i>
+      </div>
+
+      <!-- Popup Chat -->
+      <div class="chat-popup" id="chatPopup">
+        <div class="chat-header">
+          <i class="fab fa-whatsapp"></i> Customer Service
+          <span onclick="toggleChatPopup()" style="cursor: pointer"
+            >&times;</span
+          >
+        </div>
+        <div class="chat-body">
+          <p>Halo 👋<br />Butuh bantuan? Silakan chat kami via WhatsApp.</p>
+        </div>
+        <div class="chat-footer">
+          <a
+            href="https://wa.me/6281234567890?text=Halo,%20saya%20mau%20bertanya"
+            target="_blank"
+          >
+            <i class="fab fa-whatsapp"></i> Mulai Chat
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- JS Pagination & Fetch Berita -->
+    <script>
+      const beritaContainer = document.getElementById("berita-container");
+      const pagination = document.getElementById("pagination");
+      const searchInput = document.getElementById("searchInput");
+      const btnSearch = document.getElementById("btnSearch");
+
+      let currentPage = 1;
+      const limit = 8;
+
+      async function fetchBerita(page = 1, query = "") {
+        try {
+          // Show loading state
+          beritaContainer.innerHTML = `
+            <div class="col-12 text-center">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Memuat berita...</span>
+              </div>
+              <p class="mt-2">Memuat berita...</p>
+            </div>
+          `;
+
+          const res = await fetch(
+            `http://localhost:3000/api/berita?page=${page}&limit=${limit}&q=${encodeURIComponent(
+              query
+            )}`
+          );
+          if (!res.ok) throw new Error("HTTP error " + res.status);
+          const result = await res.json();
+
+          const items = result.items || [];
+
+          if (items.length === 0) {
+            beritaContainer.innerHTML = `
+              <div class="col-12 text-center py-5">
+                <i class="bi bi-newspaper fs-1 text-muted"></i>
+                <h4 class="mt-3 text-muted">Tidak ada berita ditemukan</h4>
+                <p>Silakan coba dengan kata kunci lain</p>
+              </div>
+            `;
+            pagination.innerHTML = "";
+            return;
+          }
+
+          beritaContainer.innerHTML = items
+            .map(
+              (item) => `
+            <div class="col-md-3 col-sm-6 mb-4">
+              <div class="card h-100">
+                <img src="${item.image}" class="card-img-top" alt="Berita" style="height: 180px; object-fit: cover;">
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title">${item.title}</h5>
+                  <p class="text-muted mb-2"><small>${item.date}</small></p>
+                  <p class="card-text flex-grow-1">${item.excerpt}</p>
+                  <a href="${item.url}" class="btn btn-primary mt-auto">Selengkapnya</a>
+                </div>
+              </div>
+            </div>
+          `
+            )
+            .join("");
+
+          renderPagination(result.meta.currentPage, result.meta.totalPages);
+        } catch (error) {
+          beritaContainer.innerHTML = `
+            <div class="col-12 text-center py-5">
+              <i class="bi bi-exclamation-triangle fs-1 text-danger"></i>
+              <h4 class="mt-3 text-danger">Gagal memuat berita</h4>
+              <p>Silakan coba lagi nanti</p>
+              <button class="btn btn-primary mt-2" onclick="fetchBerita()">Coba Lagi</button>
+            </div>
+          `;
+          pagination.innerHTML = "";
+          console.error("Fetch error:", error);
+        }
+      }
+
+      function renderPagination(page, totalPages) {
+        if (totalPages <= 1) {
+          pagination.innerHTML = "";
+          return;
+        }
+
+        let html = "";
+        if (page > 1) {
+          html += `<li class="page-item"><a class="page-link" href="#" onclick="changePage(${
+            page - 1
+          })">« Sebelumnya</a></li>`;
+        }
+
+        // Show first page, current page, and pages around it
+        const startPage = Math.max(1, page - 2);
+        const endPage = Math.min(totalPages, page + 2);
+
+        if (startPage > 1) {
+          html += `<li class="page-item"><a class="page-link" href="#" onclick="changePage(1)">1</a></li>`;
+          if (startPage > 2) {
+            html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+          }
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+          html += `<li class="page-item ${
+            i === page ? "active" : ""
+          }"><a class="page-link" href="#" onclick="changePage(${i})">${i}</a></li>`;
+        }
+
+        if (endPage < totalPages) {
+          if (endPage < totalPages - 1) {
+            html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+          }
+          html += `<li class="page-item"><a class="page-link" href="#" onclick="changePage(${totalPages})">${totalPages}</a></li>`;
+        }
+
+        if (page < totalPages) {
+          html += `<li class="page-item"><a class="page-link" href="#" onclick="changePage(${
+            page + 1
+          })">Selanjutnya »</a></li>`;
+        }
+
+        pagination.innerHTML = html;
+      }
+
+      function changePage(page) {
+        currentPage = page;
+        fetchBerita(page, searchInput.value);
+        // Scroll to top of news container
+        document
+          .getElementById("berita-container")
+          .scrollIntoView({ behavior: "smooth" });
+      }
+
+      btnSearch.addEventListener("click", () => {
+        currentPage = 1;
+        fetchBerita(1, searchInput.value);
+      });
+
+      searchInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+          currentPage = 1;
+          fetchBerita(1, searchInput.value);
+        }
+      });
+
+      // WhatsApp widget function
+      function toggleChatPopup() {
+        const popup = document.getElementById("chatPopup");
+        popup.style.display =
+          popup.style.display === "block" ? "none" : "block";
+      }
+
+      // Close popup when clicking outside
+      document.addEventListener("click", function (event) {
+        const popup = document.getElementById("chatPopup");
+        const whatsappBtn = document.querySelector(".whatsapp-btn");
+
+        if (
+          popup.style.display === "block" &&
+          !popup.contains(event.target) &&
+          !whatsappBtn.contains(event.target)
+        ) {
+          popup.style.display = "none";
+        }
+      });
+
+      // Navbar active link handling
+      document.addEventListener("DOMContentLoaded", function () {
+        const navLinks = document.querySelectorAll(".custom-navbar .nav-link");
+        const currentPath =
+          window.location.pathname.split("/").pop() || "index.html";
+
+        // Set active berdasarkan URL
+        navLinks.forEach((link) => {
+          const linkPath = link.getAttribute("href");
+
+          if (linkPath === currentPath) {
+            link.classList.add("active");
+          }
+        });
+
+        // Tambahkan efek klik sementara (hilangkan active di yang lain)
+        navLinks.forEach((link) => {
+          link.addEventListener("click", function () {
+            navLinks.forEach((l) => l.classList.remove("active"));
+            this.classList.add("active");
+          });
+        });
+      });
+
+      // Initial fetch
+      fetchBerita();
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

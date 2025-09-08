@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Beranda - Batam Aerocity</title>
+
+    <link rel="icon" href="images/logo_BA.jpeg" type="brand" />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/style.css" />
+
+    <!-- Font Awesome untuk Icon -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <style>
+      :root {
+        --primary-color: #1c5daa; /* Diubah dari #0077b6 ke #1c5daa */
+        --secondary-color: #f8f9fa;
+        --accent-color: #ff6b6b;
+        --text-color: #333;
+        --light-text: #6c757d;
+        --card-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+        --card-shadow-hover: 0 15px 30px rgba(0, 0, 0, 0.12);
+        --transition: all 0.3s ease;
+      }
+
+      /* Responsive Text Styles */
+      .responsive-heading {
+        font-size: 2rem;
+        color: var(--primary-color);
+      }
+
+      .responsive-text {
+        font-size: 1rem;
+        line-height: 1.6;
+        color: var(--text-color);
+      }
+
+      /* PERBAIKAN: Tabel Cuaca untuk Mobile */
+      .weather-table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin: 0 -15px;
+        padding: 0 15px;
+      }
+
+      .weather-table {
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        min-width: 650px; /* Memberikan lebar minimum agar tidak terlalu sempit */
+      }
+
+      .weather-table thead {
+        background: var(--primary-color);
+        color: white;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .weather-table tbody tr {
+        transition: var(--transition);
+      }
+
+      .weather-table tbody tr:hover {
+        background: #f1faff;
+        transform: scale(1.01);
+      }
+
+      .weather-table td,
+      .weather-table th {
+        text-align: center;
+        vertical-align: middle;
+        padding: 12px 8px;
+      }
+
+      .weather-table th:first-child,
+      .weather-table td:first-child {
+        position: sticky;
+        left: 0;
+        background-color: #f8f9fa;
+        z-index: 1;
+        min-width: 100px;
+      }
+
+      .weather-table th:first-child {
+        background-color: var(--primary-color);
+        color: white;
+      }
+
+      .weather-table td:nth-child(2) {
+        font-weight: 600;
+        font-size: 1.05rem;
+      }
+
+      .weather-icon {
+        font-size: 1.5rem;
+        margin-right: 5px;
+      }
+
+      /* Gaya untuk gambar cuaca */
+      .weather-image {
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+        margin: 0 auto;
+        display: block;
+      }
+
+      /* PERBAIKAN: Fasilitas Card Styles untuk Mobile */
+      .fasilitas-section {
+        padding: 60px 0;
+        background-color: #f9fafc;
+      }
+
+      .fasilitas-card {
+        transition: var(--transition);
+        height: 100%;
+        border: none;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: var(--card-shadow);
+        background: white;
+        margin-bottom: 20px;
+      }
+
+      .fasilitas-card:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--card-shadow-hover);
+      }
+
+      .fasilitas-card .card-img-top {
+        height: 220px;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+
+      .fasilitas-card:hover .card-img-top {
+        transform: scale(1.08);
+      }
+
+      .fasilitas-card .card-body {
+        display: flex;
+        flex-direction: column;
+        padding: 1.5rem;
+      }
+
+      .fasilitas-card .card-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        color: var(--primary-color);
+      }
+
+      .fasilitas-card .card-text {
+        flex-grow: 1;
+        margin-bottom: 1.5rem;
+        color: var(--light-text);
+        line-height: 1.6;
+      }
+
+      .fasilitas-card .btn {
+        align-self: flex-start;
+        margin-top: auto;
+        background-color: var(--primary-color);
+        border: none;
+        padding: 0.5rem 1.5rem;
+        border-radius: 30px;
+        font-weight: 500;
+        transition: var(--transition);
+      }
+
+      .fasilitas-card .btn:hover {
+        background-color: #154580; /* Warna lebih gelap untuk hover */
+        transform: translateY(-2px);
+      }
+
+      /* PERBAIKAN: Carousel Controls untuk Fasilitas */
+      #fasilitasCarousel {
+        position: relative;
+        padding: 0 15px;
+      }
+
+      #fasilitasCarousel .carousel-control-prev,
+      #fasilitasCarousel .carousel-control-next {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--primary-color);
+        opacity: 1;
+        top: 50%;
+        transform: translateY(-50%);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        transition: var(--transition);
+      }
+
+      #fasilitasCarousel .carousel-control-prev {
+        left: -10px;
+      }
+
+      #fasilitasCarousel .carousel-control-next {
+        right: -10px;
+      }
+
+      #fasilitasCarousel .carousel-control-prev:hover,
+      #fasilitasCarousel .carousel-control-next:hover {
+        background: #154580;
+        transform: translateY(-50%) scale(1.05);
+      }
+
+      /* PERBAIKAN: Modal Iklan */
+      .modal.iklan-modal {
+        backdrop-filter: blur(5px);
+        background-color: rgba(0, 0, 0, 0.7);
+      }
+
+      .modal-dialog.iklan-modal {
+        max-width: 700px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      .modal-dialog.iklan-modal .modal-content {
+        background: transparent;
+        border: none;
+        animation: modalFadeIn 0.5s ease-out;
+      }
+
+      @keyframes modalFadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .modal-dialog.iklan-modal img {
+        max-height: 80vh;
+        width: auto;
+        margin: 0 auto;
+        border-radius: 12px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      .modal-dialog.iklan-modal .btn-close {
+        position: absolute;
+        top: -40px;
+        right: -10px;
+        background: white;
+        border-radius: 50%;
+        opacity: 1;
+        padding: 10px;
+        z-index: 1060;
+        transition: var(--transition);
+      }
+
+      .modal-dialog.iklan-modal .btn-close:hover {
+        transform: rotate(90deg);
+        background: var(--accent-color);
+        color: white;
+      }
+
+      .iklan-close {
+        position: absolute;
+        top: -50px; /* makin naik ke atas */
+        right: 10px; /* tetap di pojok kanan */
+        font-size: 2rem;
+        font-weight: bold;
+        color: #fff; /* default putih */
+        cursor: pointer;
+        z-index: 1060;
+        transition: color 0.3s ease;
+      }
+
+      .iklan-close:hover {
+        color: #b9bdc0; /* hover biru */
+      }
+
+      /* Section title styling */
+      .section-title {
+        position: relative;
+        padding-bottom: 15px;
+        margin-bottom: 30px;
+        color: var(--primary-color); /* Ditambahkan warna */
+      }
+
+      .section-title:after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background-color: var(--primary-color);
+      }
+
+      /* Map Responsive */
+      #map {
+        height: 500px;
+        width: 100%;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: var(--card-shadow);
+      }
+
+      /* WhatsApp Widget */
+      #whatsapp-widget {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+      }
+
+      /* ==================== */
+      /* PERBAIKAN RESPONSIVE */
+      /* ==================== */
+
+      /* Tablet */
+      @media (max-width: 992px) {
+        .fasilitas-card .card-img-top {
+          height: 200px;
+        }
+
+        #fasilitasCarousel .carousel-control-prev {
+          left: -5px;
+        }
+
+        #fasilitasCarousel .carousel-control-next {
+          right: -5px;
+        }
+
+        .weather-table {
+          font-size: 0.9rem;
+        }
+
+        .weather-table td,
+        .weather-table th {
+          padding: 10px 6px;
+        }
+      }
+
+      /* Mobile Landscape */
+      @media (max-width: 768px) {
+        .fasilitas-section {
+          padding: 40px 0;
+        }
+
+        .fasilitas-card .card-img-top {
+          height: 180px;
+        }
+
+        .fasilitas-card .card-body {
+          padding: 1.25rem;
+        }
+
+        #fasilitasCarousel {
+          padding: 0 10px;
+        }
+
+        #fasilitasCarousel .carousel-control-prev,
+        #fasilitasCarousel .carousel-control-next {
+          width: 35px;
+          height: 35px;
+        }
+
+        /* PERBAIKAN: Modal Iklan di Mobile */
+        .modal-dialog.iklan-modal {
+          max-width: 95%;
+        }
+
+        .modal-dialog.iklan-modal img {
+          max-height: 60vh;
+          max-width: 100%;
+        }
+
+        .modal-dialog.iklan-modal .btn-close {
+          top: -35px;
+          right: 0;
+          padding: 8px;
+        }
+
+        .responsive-heading {
+          font-size: 1.5rem;
+        }
+
+        .responsive-text {
+          font-size: 0.9rem;
+        }
+
+        #map {
+          height: 300px;
+        }
+
+        .carousel-item img {
+          height: 300px;
+          object-fit: cover;
+        }
+
+        .weather-table {
+          font-size: 0.8rem;
+        }
+
+        .footer-content {
+          text-align: center;
+        }
+      }
+
+      /* Mobile Portrait - PERBAIKAN KHUSUS */
+      @media (max-width: 576px) {
+        /* Fasilitas Card */
+        .fasilitas-card .card-img-top {
+          height: 160px;
+        }
+
+        .fasilitas-card .card-title {
+          font-size: 1.1rem;
+        }
+
+        .fasilitas-card .card-text {
+          font-size: 0.9rem;
+        }
+
+        .fasilitas-card .btn {
+          padding: 0.4rem 1.2rem;
+          font-size: 0.9rem;
+        }
+
+        #fasilitasCarousel {
+          padding: 0 5px;
+        }
+
+        #fasilitasCarousel .carousel-control-prev,
+        #fasilitasCarousel .carousel-control-next {
+          width: 30px;
+          height: 30px;
+        }
+
+        #fasilitasCarousel .carousel-control-prev {
+          left: -5px;
+        }
+
+        #fasilitasCarousel .carousel-control-next {
+          right: -5px;
+        }
+
+        /* Tabel Cuaca */
+        .weather-table-container {
+          margin: 0 -10px;
+          padding: 0 10px;
+        }
+
+        .weather-table {
+          font-size: 0.7rem;
+          min-width: 600px;
+        }
+
+        .weather-table td,
+        .weather-table th {
+          padding: 8px 4px;
+        }
+
+        .weather-table th:first-child,
+        .weather-table td:first-child {
+          min-width: 80px;
+        }
+
+        /* Umum */
+        .responsive-heading {
+          font-size: 1.3rem;
+        }
+
+        .responsive-text {
+          font-size: 0.85rem;
+        }
+
+        #map {
+          height: 250px;
+        }
+
+        .carousel-item img {
+          height: 250px;
+        }
+
+        .section-title {
+          font-size: 1.5rem;
+        }
+
+        .section-title:after {
+          width: 50px;
+        }
+      }
+
+      /* Perangkat sangat kecil */
+      @media (max-width: 380px) {
+        .fasilitas-card .card-img-top {
+          height: 140px;
+        }
+
+        .fasilitas-card .card-body {
+          padding: 1rem;
+        }
+
+        .weather-table {
+          font-size: 0.65rem;
+          min-width: 550px;
+        }
+
+        .weather-table td,
+        .weather-table th {
+          padding: 6px 3px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-content">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+        <div class="container">
+          <!-- Logo -->
+          <a class="navbar-brand" href="#">
+            <img
+              src="images/logo_BA.jpeg"
+              alt="Logo Batam Aerocity"
+              class="logo-img"
+            />
+          </a>
+
+          <!-- Toggler -->
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <!-- Menu -->
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">Beranda</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  data-bs-toggle="dropdown"
+                  >Tentang Kami</a
+                >
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" href="profile/latar_belakang.html"
+                      >Latar Belakang</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="profile/tugas_fungsi.html"
+                      >Tugas dan Fungsi</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="profile/struktur_organisasi.html"
+                      >Struktur Organisasi</a
+                    >
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="layananDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Layanan
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="layananDropdown">
+                  <li>
+                    <a class="dropdown-item" href="layanan/layanan_kami.php"
+                      >Layanan Kami</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="layanan/kemitraan.html"
+                      >Kemitraan</a
+                    >
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="galeri.html">Galeri</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="kontak.html">Kontak</a>
+              </li>
+            </ul>
+
+            <!-- Tombol Masuk untuk Desktop -->
+            <div class="d-flex align-items-center desktop-login-btn">
+              <button
+                class="btn masuk-btn"
+                onclick="window.open('login.html', '_blank')"
+              >
+                <i class="fa-solid fa-user"></i> Masuk
+              </button>
+            </div>
+
+            <!-- Tombol Masuk untuk Mobile -->
+            <div class="mobile-login-btn">
+              <button
+                class="btn masuk-btn"
+                onclick="window.open('login.html', '_blank')"
+              >
+                <i class="fa-solid fa-user"></i> Masuk
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Modal Iklan Custom -->
+      <div
+        class="modal fade iklan-modal"
+        id="iklanModal"
+        tabindex="-1"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog iklan-modal">
+          <div class="modal-content">
+            <!-- Tombol Close -->
+            <span class="iklan-close" data-bs-dismiss="modal" aria-label="Close"
+              >&times;</span
+            >
+
+            <!-- Gambar Iklan -->
+            <img
+              src="images/iklan_BA.jpg"
+              class="img-fluid d-block mx-auto"
+              alt="Iklan Batam Aerocity"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Carousel -->
+      <section class="beranda-section">
+        <div
+          id="heroCarousel"
+          class="carousel slide carousel-fade"
+          data-bs-ride="carousel"
+          data-bs-interval="2500"
+          data-bs-wrap="true"
+          data-bs-pause="false"
+        >
+          <div class="carousel-indicators">
+            <button
+              type="button"
+              data-bs-target="#heroCarousel"
+              data-bs-slide-to="0"
+              class="active"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#heroCarousel"
+              data-bs-slide-to="1"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#heroCarousel"
+              data-bs-slide-to="2"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#heroCarousel"
+              data-bs-slide-to="3"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#heroCarousel"
+              data-bs-slide-to="4"
+            ></button>
+          </div>
+
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img
+                src="images/masjid_tanjak.jpeg"
+                class="d-block w-100"
+                alt="Masjid Tanjak"
+              />
+            </div>
+            <div class="carousel-item">
+              <img src="images/vvip.jpeg" class="d-block w-100" alt="VVIP" />
+            </div>
+            <div class="carousel-item">
+              <img src="images/cargo.jpeg" class="d-block w-100" alt="Cargo" />
+            </div>
+            <div class="carousel-item">
+              <img
+                src="images/terminal.jpeg"
+                class="d-block w-100"
+                alt="Terminal"
+              />
+            </div>
+            <div class="carousel-item">
+              <img src="images/DPKB.jpeg" class="d-block w-100" alt="DPKB" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Konten Utama -->
+      <div class="container mt-5">
+        <div class="row">
+          <div class="col-12">
+            <h2 class="fw-bold text-start responsive-heading">
+              Batam Aerocity
+            </h2>
+            <p class="text-start responsive-text">
+              Merupakan sebuah pembangunan perekonomian yang memusatkan
+              aktivitasnya di area sekitar bandar udara. Dalam konsep yang
+              ditawarkan ini, investor dapat menggunakan transportasi udara
+              dalam melakukan pengiriman barang. Akses keluar masuk barang akan
+              menjadi semakin lancar dan cepat. Tentunya ini menjadi daya tarik
+              tersendiri bagi para investor yang bergerak di bidang logistik.
+            </p>
+            <p class="text-start responsive-text">
+              Inovasi ini sejalan dengan penetapan Hang Nadim sebagai Kawasan
+              Ekonomi Khusus (KEK). Seperti halnya Pelabuhan Batu Ampar, Bandar
+              Udara Hang Nadim juga merupakan gerbang ke seluruh penjuru dunia.
+              Letaknya yang strategis dan didukung luas wilayahnya, menjadikan
+              Hang Nadim mudah untuk dimaksimalkan menjadi kawasan metropolitan.
+              Hang Nadim sudah memiliki modal yang baik dalam rangka mengusung
+              konsep aerocity. Bandar udara tersebut juga memiliki fasilitas
+              kargo untuk barang di area yang luas. Bahkan, pesawat-pesawat
+              berbadan lebar pun bisa mendarat di Hang Nadim.
+            </p>
+            <p class="text-start responsive-text">
+              Dalam pengembangannya, aerocity akan lebih banyak berfokus kepada
+              logistik. Aerocity akan membidik juga bisnis e-commerce. Tentu ini
+              terintegrasi dengan program yang sudah digagas sebelumnya. Karena
+              Batam juga sudah memulai industri di bidang digital, adanya
+              aerocity logistik membuat sinergi antara perusahaan yang bergerak
+              secara digital dengan barang yang diperjualbelikannya.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PERBAIKAN: Fasilitas Section dengan layout yang lebih baik -->
+      <section class="fasilitas-section">
+        <div class="container">
+          <h3 class="section-title fw-bold text-start">
+            Fasilitas Batam Aerocity
+          </h3>
+
+          <div
+            id="fasilitasCarousel"
+            class="carousel slide"
+            data-bs-ride="carousel"
+          >
+            <div class="carousel-inner">
+              <!-- Slide 1 -->
+              <div class="carousel-item active">
+                <div class="row">
+                  <!-- Menambahkan gutter yang konsisten -->
+                  <div class="col-12 col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 fasilitas-card">
+                      <img
+                        src="images/terminal.jpeg"
+                        class="card-img-top"
+                        alt="Bandara Hang Nadim"
+                      />
+                      <div class="card-body">
+                        <h5 class="card-title">Bandara Hang Nadim & Cargo</h5>
+                        <p class="card-text">
+                          Merupakan fasilitas bandara dengan area kargo luas
+                          untuk mendukung logistik cepat.
+                        </p>
+                        <a
+                          href="https://bthairport.com/"
+                          class="btn btn-primary mt-auto"
+                          >Selengkapnya</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 fasilitas-card">
+                      <img
+                        src="images/MRO.jpg"
+                        class="card-img-top"
+                        alt="MRO"
+                      />
+                      <div class="card-body">
+                        <h5 class="card-title">MRO</h5>
+                        <p class="card-text">
+                          Fasilitas Maintenance, Repair, and Overhaul (MRO)
+                          untuk pesawat dan logistik pendukung.
+                        </p>
+                        <a
+                          href="https://kek.go.id/id/investment/distribution/kek-batam-aero-technic"
+                          class="btn btn-primary mt-auto"
+                          >Selengkapnya</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 fasilitas-card">
+                      <img
+                        src="images/kawasan_industri.jpeg"
+                        class="card-img-top"
+                        alt="Kawasan Industri"
+                      />
+                      <div class="card-body">
+                        <h5 class="card-title">Kawasan Industri Bandara</h5>
+                        <p class="card-text">
+                          Area industri strategis untuk logistik dan distribusi
+                          di sekitar bandara.
+                        </p>
+                        <a href="#" class="btn btn-primary mt-auto"
+                          >Selengkapnya</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Slide 2 -->
+              <div class="carousel-item">
+                <div class="row">
+                  <!-- Menambahkan gutter yang konsisten -->
+                  <div class="col-12 col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 fasilitas-card">
+                      <img
+                        src="images/komersial_hub.png"
+                        class="card-img-top"
+                        alt="Komersial Hub"
+                      />
+                      <div class="card-body">
+                        <h5 class="card-title">Komersial Hub</h5>
+                        <p class="card-text">
+                          Pusat komersial yang mendukung aktivitas bisnis dan
+                          logistik di kawasan aerocity.
+                        </p>
+                        <a href="#" class="btn btn-primary mt-auto"
+                          >Selengkapnya</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 fasilitas-card">
+                      <img
+                        src="images/sarana_pendukung_bandara.png"
+                        class="card-img-top"
+                        alt="Sarana Pendukung Bandara"
+                      />
+                      <div class="card-body">
+                        <h5 class="card-title">Sarana Pendukung Bandara</h5>
+                        <p class="card-text">
+                          Fasilitas pendukung seperti transportasi internal,
+                          gudang, dan area logistik.
+                        </p>
+                        <a href="#" class="btn btn-primary mt-auto"
+                          >Selengkapnya</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Card kosong untuk menjaga konsistensi layout -->
+                  <div class="col-12 col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 fasilitas-card">
+                      <div
+                        class="card-body d-flex align-items-center justify-content-center"
+                      >
+                        <p class="text-muted text-center">
+                          Fasilitas lainnya akan segera hadir
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kontrol panah -->
+            <button
+              class="carousel-control-prev"
+              type="button"
+              data-bs-target="#fasilitasCarousel"
+              data-bs-slide="prev"
+            >
+              <span
+                class="carousel-control-prev-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Sebelumnya</span>
+            </button>
+            <button
+              class="carousel-control-next"
+              type="button"
+              data-bs-target="#fasilitasCarousel"
+              data-bs-slide="next"
+            >
+              <span
+                class="carousel-control-next-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Berikutnya</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section Peta Kawasan -->
+      <section id="peta-kawasan" class="py-5">
+        <div class="container">
+          <h2 class="text-start fw-bold mb-4">Peta Kawasan Bandara</h2>
+          <div id="map"></div>
+        </div>
+      </section>
+
+      <!-- Cuaca Section - PERBAIKAN KHUSUS -->
+      <section id="cuaca" class="py-5 bg-light">
+        <div class="container">
+          <h2 class="text-center mb-4">Prediksi Cuaca & Suhu Batam (7 Hari)</h2>
+          <div class="weather-table-container">
+            <table class="table table-bordered weather-table text-center">
+              <thead>
+                <tr id="weatherHeader"></tr>
+              </thead>
+              <tbody id="weatherBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="text-white pt-4 pb-2">
+        <div class="container">
+          <div class="row align-items-start">
+            <!-- Kiri -->
+            <div class="col-lg-6 col-md-12 mb-4 footer-logo">
+              <div class="text-md-start footer-content">
+                <img
+                  src="images/aerocity_logo.png"
+                  alt="Batam Aerocity"
+                  style="width: 180px; max-width: 100%"
+                  class="mb-2"
+                />
+                <p style="font-size: 0.9rem">
+                  Aerocity merupakan sebuah pembangunan perekonomian yang
+                  memusatkan aktivitasnya di area sekitar bandar udara. Dalam
+                  konsep yang ditawarkan ini, investor dapat menggunakan
+                  transportasi udara dalam melakukan pengiriman barang.
+                </p>
+                <div class="social-icons mt-2">
+                  <a
+                    href="https://www.facebook.com/share/1B16ggstpr/?mibextid=wwXIfr"
+                    class="text-white me-3"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <i class="bi bi-facebook fs-4"></i>
+                  </a>
+                  <a
+                    href="https://www.instagram.com/bpbatam?igsh=MWJwMzlkNzBhb3AzOQ=="
+                    class="text-white"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <i class="bi bi-instagram fs-4"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kanan -->
+            <div
+              class="col-lg-6 col-md-12 mb-4 footer-contact d-flex flex-column justify-content-start align-items-center"
+            >
+              <div class="pad-kontak footer-content">
+                <h5 style="font-size: 1.1rem">Kontak</h5>
+                <p style="margin-bottom: 0.8rem">
+                  <i class="bi bi-telephone me-2"></i> +123 456 7890
+                </p>
+                <p style="margin-bottom: 0.8rem">
+                  <i class="bi bi-envelope me-2"></i>
+                  Batamaerocity@bpbatam.go.id
+                </p>
+                <p style="margin-bottom: 0">
+                  <i class="bi bi-geo-alt me-2"></i> Gedung direktorat
+                  pengelolaan kawasan bandara
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Garis -->
+          <hr class="border-light my-2" />
+
+          <!-- Copyright -->
+          <p class="footer-copyright mb-0 text-center text-md-start">
+            Copyright © 2025 Batam Aerocity, All Rights Reserved.
+          </p>
+        </div>
+      </footer>
+
+      <!-- Floating WhatsApp Button -->
+      <div id="whatsapp-widget">
+        <div class="chat-bubble">Chat dengan kami</div>
+        <div class="whatsapp-btn" onclick="toggleChatPopup()">
+          <i class="fab fa-whatsapp"></i>
+        </div>
+
+        <!-- Popup Chat -->
+        <div class="chat-popup" id="chatPopup">
+          <div class="chat-header">
+            <i class="fab fa-whatsapp"></i> Customer Service
+            <span onclick="toggleChatPopup()" style="cursor: pointer"
+              >&times;</span
+            >
+          </div>
+          <div class="chat-body">
+            <p>Halo 👋<br />Butuh bantuan? Silakan chat kami via WhatsApp.</p>
+          </div>
+          <div class="chat-footer">
+            <a
+              href="https://wa.me/6281234567890?text=Halo,%20saya%20mau%20bertanya"
+              target="_blank"
+            >
+              <i class="fab fa-whatsapp"></i> Mulai Chat
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+      // Fungsi untuk mendapatkan gambar cuaca berdasarkan kode cuaca (DIPERBAIKI)
+      function getWeatherImage(code) {
+        // Kelompokkan kode cuaca ke dalam kategori umum
+        if (code === 0) {
+          // Cerah
+          return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='5' fill='%23FFD700'/%3E%3C/svg%3E";
+        } else if (code >= 1 && code <= 3) {
+          // Berawan
+          return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20 13a8 8 0 0 1-16 0c0-2.5 1.5-4 4-4h8c2.5 0 4 1.5 4 4z' fill='%23999'/%3E%3C/svg%3E";
+        } else if (code >= 45 && code <= 48) {
+          // Kabut
+          return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 15h18M3 18h18M3 12h18' stroke='%23999' stroke-width='2'/%3E%3C/svg%3E";
+        } else if (code >= 51 && code <= 67) {
+          // Hujan
+          return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20 13a8 8 0 0 1-16 0c0-2.5 1.5-4 4-4h8c2.5 0 4 1.5 4 4z' fill='%23999'/%3E%3Cpath d='M8 16l2-4 2 4M12 14v4M14 16l-2-4-2 4' stroke='%23007bff' stroke-width='1.5'/%3E%3C/svg%3E";
+        } else if (code >= 71 && code <= 77) {
+          // Salju (jarang di Batam, tapi tetap disiapkan)
+          return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20 13a8 8 0 0 1-16 0c0-2.5 1.5-4 4-4h8c2.5 0 4 1.5 4 4z' fill='%23999'/%3E%3Cpath d='M10 16l1-2 1 2M12 15v2M14 16l-1-2-1 2' stroke='%23fff' stroke-width='1.5'/%3E%3C/svg%3E";
+        } else if (code >= 80 && code <= 86) {
+          // Hujan deras
+          return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20 13a8 8 0 0 1-16 0c0-2.5 1.5-4 4-4h8c2.5 0 4 1.5 4 4z' fill='%23666'/%3E%3Cpath d='M8 16l2-4 2 4M12 14v4M14 16l-2-4-2 4' stroke='%230055cc' stroke-width='1.5'/%3E%3C/svg%3E";
+        } else if (code >= 95 && code <= 99) {
+          // Badai petir
+          return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20 13a8 8 0 0 1-16 0c0-2.5 1.5-4 4-4h8c2.5 0 4 1.5 4 4z' fill='%23333'/%3E%3Cpath d='M13 10l-4 6h4l-2 4' stroke='%23FFD700' stroke-width='1.5' fill='none'/%3E%3C/svg%3E";
+        } else {
+          // Default: cerah berawan
+          return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='5' fill='%23FFD700'/%3E%3Cpath d='M20 13a8 8 0 0 1-16 0c0-2.5 1.5-4 4-4h8c2.5 0 4 1.5 4 4z' fill='%23ccc' opacity='0.7'/%3E%3C/svg%3E";
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // PERBAIKAN: Modal Iklan - Menambahkan centering yang lebih baik
+        var iklanModal = new bootstrap.Modal(
+          document.getElementById("iklanModal")
+        );
+
+        // Tampilkan modal setelah halaman dimuat
+        setTimeout(function () {
+          iklanModal.show();
+        }, 1000);
+
+        // Carousel Hero
+        var heroCarouselEl = document.querySelector("#heroCarousel");
+        if (heroCarouselEl) {
+          new bootstrap.Carousel(heroCarouselEl, {
+            interval: 3000,
+            wrap: true,
+            ride: "carousel",
+          });
+        }
+
+        // Navbar active link handling
+        const navLinks = document.querySelectorAll(".custom-navbar .nav-link");
+        const currentPath =
+          window.location.pathname.split("/").pop() || "index.html";
+
+        // Set active berdasarkan URL
+        navLinks.forEach((link) => {
+          const linkPath = link.getAttribute("href");
+          if (linkPath === currentPath) {
+            link.classList.add("active");
+          }
+        });
+
+        // Tambahkan efek klik sementara
+        navLinks.forEach((link) => {
+          link.addEventListener("click", function () {
+            navLinks.forEach((l) => l.classList.remove("active"));
+            this.classList.add("active");
+          });
+        });
+
+        // Inisialisasi peta
+        var map = L.map("map").setView([1.1211, 104.1198], 15);
+
+        // Tambahkan layer peta
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          maxZoom: 19,
+        }).addTo(map);
+
+        // Marker 1 - Terminal Bandara
+        L.marker([1.1211, 104.1198])
+          .addTo(map)
+          .bindPopup(
+            '<b>Terminal Bandara</b><br><a href="https://bpbatam.go.id" target="_blank">Lihat Detail</a>'
+          );
+
+        // Marker 2 - VVIP
+        L.marker([1.1225, 104.121])
+          .addTo(map)
+          .bindPopup(
+            '<b>VVIP</b><br><a href="https://google.com" target="_blank">Lihat Detail</a>'
+          );
+
+        // Marker 3 - Cargo
+        L.marker([1.1195, 104.118])
+          .addTo(map)
+          .bindPopup(
+            '<b>Cargo</b><br><a href="https://example.com" target="_blank">Lihat Detail</a>'
+          );
+
+        // Cuaca API
+        const weatherBody = document.getElementById("weatherBody");
+        const weatherHeader = document.getElementById("weatherHeader");
+        const lat = 1.1217,
+          lon = 104.1065;
+
+        fetch(
+          `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weathercode&timezone=Asia/Jakarta`
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            const tempMax = data.daily.temperature_2m_max;
+            const tempMin = data.daily.temperature_2m_min;
+            const weatherCodes = data.daily.weathercode;
+            const precipitation = data.daily.precipitation_sum;
+            const dates = data.daily.time;
+
+            // Header dinamis
+            let headerRow = "<th>Informasi</th>";
+            dates.forEach((dateStr) => {
+              const date = new Date(dateStr);
+              const options = {
+                weekday: "short",
+                day: "numeric",
+                month: "short",
+              };
+              headerRow += `<th>${date.toLocaleDateString(
+                "id-ID",
+                options
+              )}</th>`;
+            });
+            weatherHeader.innerHTML = headerRow;
+
+            // Baris data
+            let cuacaRow = "<td>Cuaca</td>";
+            let suhuRow = "<td>Suhu (°C)</td>";
+            let hujanRow = "<td>Hujan (mm)</td>";
+
+            for (let i = 0; i < dates.length; i++) {
+              cuacaRow += `<td><img src="${getWeatherImage(
+                weatherCodes[i]
+              )}" alt="${getWeatherText(
+                weatherCodes[i]
+              )}" class="weather-image"><br>${getWeatherText(
+                weatherCodes[i]
+              )}</td>`;
+              suhuRow += `<td>${tempMin[i]}° - ${tempMax[i]}°</td>`;
+              hujanRow += `<td>${precipitation[i]}</td>`;
+            }
+
+            weatherBody.innerHTML = `<tr>${cuacaRow}</tr><tr>${suhuRow}</tr><tr>${hujanRow}</tr>`;
+          });
+
+        // Fungsi untuk mendapatkan deskripsi cuaca (DIPERBAIKI)
+        function getWeatherText(code) {
+          // Kelompokkan kode cuaca ke dalam kategori umum
+          if (code === 0) {
+            return "Cerah";
+          } else if (code >= 1 && code <= 3) {
+            return "Berawan";
+          } else if (code >= 45 && code <= 48) {
+            return "Berkabut";
+          } else if (code >= 51 && code <= 67) {
+            return "Hujan";
+          } else if (code >= 71 && code <= 77) {
+            return "Salju";
+          } else if (code >= 80 && code <= 86) {
+            return "Hujan Deras";
+          } else if (code >= 95 && code <= 99) {
+            return "Badai Petir";
+          } else {
+            return "Berawan";
+          }
+        }
+      });
+
+      // WhatsApp widget function
+      function toggleChatPopup() {
+        const popup = document.getElementById("chatPopup");
+        popup.style.display =
+          popup.style.display === "block" ? "none" : "block";
+      }
+
+      // Close popup when clicking outside
+      document.addEventListener("click", function (event) {
+        const popup = document.getElementById("chatPopup");
+        const whatsappBtn = document.querySelector(".whatsapp-btn");
+
+        if (
+          popup.style.display === "block" &&
+          !popup.contains(event.target) &&
+          !whatsappBtn.contains(event.target)
+        ) {
+          popup.style.display = "none";
+        }
+      });
+    </script>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
